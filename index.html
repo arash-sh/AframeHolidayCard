@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>WebXR</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script>
+      // WebXR requires HTTPS
+      if (
+        window.location.protocol == "http:" &&
+        window.location.hostname != "localhost" &&
+        window.location.hostname != "127.0.0.1" &&
+        window.location.hostname != "[::1]"
+      ) {
+        window.location = window.location.href.replace("http:", "https:");
+      }
+    </script>
+
+    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-gif-component/master/dist/aframe-gif-component.min.js"></script>
+
+    <body style="margin : 0px; overflow: hidden;">
+
+	  <!-- define the assets used -->
+      <a-scene embedded arjs>
+		  <!--If there is a problem with the image use the image URL. Images with transparent backgrounds are not guaranteed to work -->
+          <a-asset-item id="snow" src="images/snow.jpg"></a-asset-item>
+          <a-asset-item id="x-tree" src="models/X-Tree.gltf"></a-asset-item>
+        </a-assets>
+
+        <!-- marker-based camera -->
+        <a-marker-camera preset="hiro">
+
+          <!-- Load and animate a 3D model -->
+          <a-gltf-model src="#x-tree" position="0 0 .5" scale="1 1 1"
+            animation="property: rotation; from: -90 0 0; to: -90 360 0; loop: true; dur: 30000; dir:normal; easing: linear;"
+          ></a-gltf-model>
+
+          <!-- Place a text-->
+          <a-text position="0.01 .3 -0.15" align="center" font="monoid" width="2.1"
+            color="#e35700" rotation="-90 0 0" value="Happy\nHolidays"
+          ></a-text>
+          
+		  <!-- Image-->
+          <a-image src="#snow" scale="2.5 5 2.5" rotation="90 180 0"
+            animation="property: position; from: 0 -.5 -1.1; to: 0 -.5 .6; loop: true; dur: 12000; dir:normal; easing: linear;"
+          ></a-image>    
+
+          <!-- Gif : does not work with transparent backgrounds-->
+          <!-- <a-entity geometry="primitive:plane" position="0 0 0" rotation="-90 0 0" scale="2 2 2" material="side: front; shader:gif;src:url(https://media1.giphy.com/media/12wteMTXxjLaVO/giphy.gif);transparent:true;opacity:0.5;" gif="" ></a-entity>  -->
+        
+		</a-marker-camera>
+     
+		<a-entity camera> 
+			<a-entity 
+					position="0 0 0" >
+			</a-entity>
+		</a-entity>
+      </a-scene>
+    </body>
+  </head>
+</html>
